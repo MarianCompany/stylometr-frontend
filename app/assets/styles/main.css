@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+    --color-sm-brand-1: #FF650E;
+    --color-sm-brand-2: #E65A0D;
+    --color-sm-brand-3: #CC500B;
+    --color-sm-brand-4: #B3460A;
+    --color-sm-brand-5: #993C08;
+
+    --color-sm-accent-1: #558BDD;
+    --color-sm-accent-2: #4C7DC7;
+    --color-sm-accent-3: #436FB1;
+    --color-sm-accent-4: #3A619B;
+    --color-sm-accent-5: #315385;
+
+    --color-sm-dark-1: #1B1B1B;
+    --color-sm-dark-2: #3A3A3A;
+    --color-sm-dark-3: #5A5A5A;
+    --color-sm-dark-4: #7A7A7A;
+    --color-sm-dark-5: #9A9A9A;
+
+    --color-sm-light-1: #FFFFFF;
+    --color-sm-light-2: #E6E6E6;
+    --color-sm-light-3: #CCCCCC;
+    --color-sm-light-4: #B3B3B3;
+    --color-sm-light-5: #999999;
+
+    --color-sm-bg-1: var(--color-sm-dark-1);
+    --color-sm-bg-2: var(--color-sm-dark-2);
+    --color-sm-bg-3: var(--color-sm-dark-3);
+    --color-sm-bg-4: var(--color-sm-dark-4);
+    --color-sm-bg-5: var(--color-sm-dark-5);
+
+    --color-sm-bg-invert-1: var(--color-sm-light-1);
+    --color-sm-bg-invert-2: var(--color-sm-light-2);
+    --color-sm-bg-invert-3: var(--color-sm-light-3);
+    --color-sm-bg-invert-4: var(--color-sm-light-4);
+    --color-sm-bg-invert-5: var(--color-sm-light-5);
+
+    --color-sm-text-1: var(--color-sm-light-1);
+    --color-sm-text-2: var(--color-sm-light-2);
+    --color-sm-text-3: var(--color-sm-light-3);
+    --color-sm-text-4: var(--color-sm-light-4);
+    --color-sm-text-5: var(--color-sm-light-5);
+
+    --color-sm-text-invert-1: var(--color-sm-dark-1);
+    --color-sm-text-invert-2: var(--color-sm-dark-2);
+    --color-sm-text-invert-3: var(--color-sm-dark-3);
+    --color-sm-text-invert-4: var(--color-sm-dark-4);
+    --color-sm-text-invert-5: var(--color-sm-dark-5);
+
+    --font-default: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    --font-montserrat: "Montserrat", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+    --breakpoint-xs: 28rem;
+    --breakpoint-3xl: 104rem;
+}
+
+html {
+    scrollbar-gutter: stable;
+}
+
+body {
+    @apply font-default bg-sm-bg-1;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.container {
+    @apply mx-auto px-4 md:px-8 max-w-436;
+}
+
