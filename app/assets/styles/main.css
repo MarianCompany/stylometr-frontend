@@ -79,3 +79,32 @@ body {
     @apply mx-auto px-4 md:px-8 max-w-436;
 }
 
+/* Sonner */
+[data-sonner-toaster] {
+    font-family: var(--font-default);
+}
+
+[data-sonner-toast] {
+    @apply rounded-2xl border border-sm-bg-3 bg-sm-bg-2 text-sm-text-1 shadow-[0_12px_30px_rgba(0,0,0,0.35)];
+}
+
+[data-sonner-toast][data-type="success"] {
+    @apply border-sm-brand-1;
+}
+
+[data-sonner-toast][data-type="error"] {
+    @apply border-red-500;
+}
+
+[data-sonner-toast] [data-title] {
+    @apply text-sm font-semibold text-sm-text-1;
+}
+
+[data-sonner-toast] [data-description] {
+    @apply text-xs text-sm-text-3;
+}
+
+[data-sonner-toast] [data-icon] {
+    @apply text-sm-brand-1;
+}
+/* Sonner */

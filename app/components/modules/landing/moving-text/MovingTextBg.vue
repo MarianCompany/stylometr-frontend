@@ -33,7 +33,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   primaryTextColor: '#FFFFFF',
   secondaryTextColor: '#9A9A9A',
-  accentTextColor: '#558BDD',
+  accentTextColor: '#FF650E',
   texts: texts,
   rotateDeg: -45,
   animationSpeed: 256,
