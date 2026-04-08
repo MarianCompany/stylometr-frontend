@@ -30,8 +30,21 @@ const tryLogout = async () => {
   <header class="app-header">
     <div class="container app-header__inner">
       <div class="app-header__logo">
-        <img src="/logo.png" alt="Logo" class="app-header__logo-img" />
+        <NuxtLink to="/">
+          <img src="/logo.png" alt="Logo" class="app-header__logo-img" />
+        </NuxtLink>
       </div>
+      <nav class="flex items-center gap-6">
+        <ClientOnly>
+          <NuxtLink
+            v-if="isAuthenticated"
+            to="/profiles"
+            class="text-sm font-semibold text-sm-text-2 transition-colors hover:text-sm-text-1"
+          >
+            Профили
+          </NuxtLink>
+        </ClientOnly>
+      </nav>
       <div class="app-header__actions">
         <ClientOnly>
           <template v-if="isAuthenticated">
