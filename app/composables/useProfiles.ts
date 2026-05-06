@@ -76,6 +76,19 @@ export const useProfiles = () => {
     return await fetchJson<ProfileTextRead>(`/profiles/${profileId}/texts/${textId}`)
   }
 
+  const createProfileText = async (profileId: number, content: string) => {
+    return await fetchJson<ProfileTextRead>(`/profiles/${profileId}/texts`, {
+      method: 'POST',
+      body: { content },
+    })
+  }
+
+  const deleteProfileText = async (profileId: number, textId: number) => {
+    return await fetchJson<void>(`/profiles/${profileId}/texts/${textId}`, {
+      method: 'DELETE',
+    })
+  }
+
   const compareProfileText = async (profileId: number, text: string) => {
     const form = new FormData()
     form.append('text', text)
@@ -101,6 +114,8 @@ export const useProfiles = () => {
     getProfileMetrics,
     listProfileTexts,
     getProfileText,
+    createProfileText,
+    deleteProfileText,
     compareProfileText,
   }
 }

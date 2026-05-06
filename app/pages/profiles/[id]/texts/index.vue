@@ -7,7 +7,7 @@ import {NuxtLink} from "#components";
 
 const { isAuthenticated } = useAuth()
 const { openLogin } = useAuthModals()
-const { getProfile, listProfileTexts } = useProfiles()
+const { getProfile, listProfileTexts, deleteProfileText } = useProfiles()
 const route = useRoute()
 
 const profile = ref<ProfileRead | null>(null)
@@ -75,6 +75,19 @@ const loadData = async () => {
   }
 }
 
+const handleDelete = async (textId: number) => {
+  if (!confirm('Удалить текст? Действие нельзя отменить.')) {
+    return
+  }
+  try {
+    await deleteProfileText(profileId.value, textId)
+    texts.value = texts.value.filter((item) => item.id !== textId)
+    toast.success('Текст удален')
+  } catch (error) {
+    toast.error(extractApiError(error, 'Не удалось удалить текст'))
+  }
+}
+
 watch([isAuthenticated, profileId], () => {
   if (isAuthenticated.value) {
     loadData()
@@ -92,7 +105,16 @@ watch([isAuthenticated, profileId], () => {
         <h1 class="text-2xl font-semibold text-sm-text-1">
           Профиль {{ profile?.name ?? '—' }} — Тексты
         </h1>
-        <UiButton :component="NuxtLink" to="/profiles" theme="ghost" label="К профилям" />
+        <div class="flex flex-wrap items-center gap-3">
+          <UiButton
+            v-if="isAuthenticated"
+            :component="NuxtLink"
+            :to="`/profiles/${profileId}/texts/new`"
+            theme="brand"
+            label="Добавить текст"
+          />
+          <UiButton :component="NuxtLink" to="/profiles" theme="ghost" label="К профилям" />
+        </div>
       </div>
 
       <div
@@ -115,11 +137,12 @@ watch([isAuthenticated, profileId], () => {
 
       <div v-else class="flex flex-col gap-4">
         <div class="rounded-3xl border border-sm-bg-3 bg-sm-bg-2/70 p-4">
-          <div class="grid grid-cols-4 gap-4 text-xs font-semibold uppercase tracking-wide text-sm-text-4">
+          <div class="grid grid-cols-5 gap-4 text-xs font-semibold uppercase tracking-wide text-sm-text-4">
             <div>Имя файла</div>
             <div>Тип</div>
             <div>Размер</div>
             <div>Дата</div>
+            <div class="text-right">Действия</div>
           </div>
         </div>
 
@@ -131,21 +154,29 @@ watch([isAuthenticated, profileId], () => {
         </div>
 
         <div v-else class="max-h-[520px] space-y-3 overflow-y-auto pr-1 no-scrollbar">
-          <NuxtLink
+          <div
             v-for="text in texts"
             :key="text.id"
-            :to="`/profiles/${profileId}/texts/${text.id}`"
-            class="group block rounded-3xl border border-sm-bg-3 bg-sm-bg-2/70 p-4 transition-all hover:border-sm-brand-1 hover:bg-sm-bg-2"
+            class="group flex items-center gap-4 rounded-3xl border border-sm-bg-3 bg-sm-bg-2/70 p-4 transition-all hover:border-sm-brand-1 hover:bg-sm-bg-2"
           >
-            <div class="grid grid-cols-4 gap-4 text-sm text-sm-text-2">
+            <NuxtLink
+              :to="`/profiles/${profileId}/texts/${text.id}`"
+              class="grid flex-1 grid-cols-4 gap-4 text-sm text-sm-text-2"
+            >
               <div class="font-semibold text-sm-text-1">
                 {{ getFileName(text) }}
               </div>
               <div class="text-sm-text-3">{{ getFileType() }}</div>
               <div class="text-sm-text-3">{{ getFileSize(text) }}</div>
               <div class="text-sm-text-3">{{ formatDate(text.updated_at || text.created_at) }}</div>
-            </div>
-          </NuxtLink>
+            </NuxtLink>
+            <UiButton
+              size="sm"
+              theme="ghost"
+              label="Удалить"
+              @click.stop="handleDelete(text.id)"
+            />
+          </div>
         </div>
       </div>
     </div>

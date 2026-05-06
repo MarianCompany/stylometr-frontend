@@ -217,7 +217,8 @@ watchEffect(() => {
             </div>
 
             <div class="mt-6 flex flex-wrap gap-2">
-              <UiButton size="sm" theme="accent" label="Сравнить" @click="handleStub('Сравнение пока недоступно')" />
+              <UiButton             :component="NuxtLink"
+                                    href="/compare" size="sm" theme="accent" label="Сравнить" />
               <UiButton
                 size="sm"
                 theme="default"

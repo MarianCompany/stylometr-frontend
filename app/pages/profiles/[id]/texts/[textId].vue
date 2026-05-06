@@ -3,11 +3,10 @@ import { toast } from 'vue-sonner'
 import UiButton from '~/components/ui/UiButton.vue'
 import { extractApiError } from '~/helpers/extractApiError'
 import type { ProfileRead, ProfileTextRead } from '~/types/profiles'
-import {NuxtLink} from "#components";
 
 const { isAuthenticated } = useAuth()
 const { openLogin } = useAuthModals()
-const { getProfile, getProfileText } = useProfiles()
+const { getProfile, getProfileText, deleteProfileText } = useProfiles()
 const route = useRoute()
 
 const profile = ref<ProfileRead | null>(null)
@@ -98,6 +97,22 @@ const closeModal = () => {
   isModalOpen.value = false
 }
 
+const handleDelete = async () => {
+  if (!text.value) {
+    return
+  }
+  if (!confirm('Удалить текст? Действие нельзя отменить.')) {
+    return
+  }
+  try {
+    await deleteProfileText(profileId.value, text.value.id)
+    toast.success('Текст удален')
+    await navigateTo(`/profiles/${profileId.value}/texts`)
+  } catch (error) {
+    toast.error(extractApiError(error, 'Не удалось удалить текст'))
+  }
+}
+
 watch([isAuthenticated, profileId, textId], () => {
   if (isAuthenticated.value) {
     loadData()
@@ -172,6 +187,10 @@ watch([isAuthenticated, profileId, textId], () => {
             {{ getPreview() }}
           </p>
           <p class="text-xs text-sm-text-4">Показан только фрагмент текста.</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <UiButton theme="ghost" label="Удалить" @click="handleDelete" />
         </div>
       </div>
     </div>

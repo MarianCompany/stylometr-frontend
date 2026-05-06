@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import MovingTextBg from '~/components/modules/landing/moving-text/MovingTextBg.vue'
 import UiButton from '~/components/ui/UiButton.vue'
+import {NuxtLink} from "#components";
 </script>
 
 <template>
@@ -15,7 +16,7 @@ import UiButton from '~/components/ui/UiButton.vue'
           <p>Анализируйте тексты быстро и точно</p>
           <p>Получайте стилистические инсайты в пару кликов</p>
         </div>
-        <UiButton theme="brand" size="xl" label="Начать анализ" />
+        <UiButton :component="NuxtLink" href="/profiles" theme="brand" size="xl" label="Начать анализ" />
       </div>
     </div>
   </section>
