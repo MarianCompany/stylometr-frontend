@@ -1,75 +1,209 @@
-# Nuxt Minimal Starter
+# Stylometr Frontend
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Клиентская часть веб-ориентированной системы атрибуции авторства русскоязычных текстов на основе методов стилометрического анализа.
 
-## Setup
+## Назначение
 
-Make sure to install dependencies:
+Frontend-компонент обеспечивает:
+
+- пользовательский веб-интерфейс для проведения стилометрического анализа;
+- страницы регистрации, входа и управления профилем пользователя;
+- создание, редактирование и удаление профилей авторов;
+- загрузку и просмотр текстов;
+- предоставление данных о предполагаемом авторстве;
+- административную панель для:
+    - модерации профилей;
+    - управления пользователями;
+
+## Технологический стек
+
+| Технология | Назначение |
+|---|---|
+| TypeScript | Основной язык разработки |
+| Vue 3 | UI-фреймворк |
+| Nuxt 4 | Мета-фреймворк |
+| Pinia | Управление состоянием |
+| Tailwind CSS | Стилизация интерфейса |
+| Chart.js | Визуализация данных |
+| Vue Sonner | Уведомления |
+| Vue Final Modal | Модальные окна |
+
+
+## Требования к окружению
+
+- Node.js 18+
+- `npm` или `yarn`
+
+# Установка и запуск
+
+## Локальный запуск (режим разработки)
+
+### 1. Переход в директорию проекта
 
 ```bash
-# npm
+cd stylometr-frontend
+```
+
+### 2. Установка зависимостей
+
+```bash
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+### 3. Создание файла `.env`
 
-Start the development server on `http://localhost:3000`:
+При необходимости создайте файл `.env`:
+
+```env
+NUXT_PUBLIC_API_BASE=http://localhost:8000
+```
+
+### 4. Запуск сервера разработки
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+После запуска приложение будет доступно по адресу:
 
-Build the application for production:
+```text
+http://localhost:3000
+```
+
+## Production-сборка
+
+### Сборка проекта
 
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
+Результат сборки будет размещён в директории `.output`.
+
+### Локальный запуск production-версии
 
 ```bash
-# npm
 npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Статическая генерация
+
+```bash
+npm run generate
+```
+
+Сгенерированные статические файлы будут размещены в директории:
+
+```text
+.output/public
+```
+
+Полученные файлы могут обслуживаться любым веб-сервером, например:
+
+- Nginx
+- Apache
+
+## Конфигурация
+
+Основной файл конфигурации проекта — `nuxt.config.ts`.
+
+### Пример конфигурации
+
+```typescript
+export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:8000'
+    }
+  },
+  css: ['~/assets/css/main.css'],
+  modules: ['@pinia/nuxt'],
+  app: {
+    head: {
+      title: 'Стилометр',
+      meta: [
+        {
+          name: 'description',
+          content: 'Система стилометрического анализа и атрибуции авторства'
+        }
+      ]
+    }
+  }
+})
+```
+
+## Основные страницы
+
+| Маршрут | Назначение |
+|---|---|
+| `/` | Главная страница |
+| `/profiles` | Список профилей авторов |
+| `/profiles/new` | Создание нового профиля |
+| `/profiles/{id}` | Просмотр профиля |
+| `/profiles/{id}/edit` | Редактирование профиля |
+| `/profiles/{id}/texts` | Тексты профиля |
+| `/compare` | Сравнение текста с профилем |
+| `/admin/users` | Управление пользователями |
+| `/admin/users/{id}` | Карточка пользователя |
+| `/admin/moderation` | Модерация профилей |
+| `/admin/logs` | Журнал действий |
+
+## Взаимодействие с backend
+
+Frontend взаимодействует с backend через REST API.
+
+Базовый адрес API задаётся через переменную окружения:
+
+```env
+NUXT_PUBLIC_API_BASE=http://localhost:8000
+```
+
+Для защищённых эндпоинтов используется JWT-аутентификация через заголовок:
+
+```http
+Authorization: Bearer <access_token>
+```
+
+### Пример API-запроса
+
+```typescript
+const { data, error } = await useFetch('/profiles', {
+  baseURL: config.public.apiBase,
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+})
+```
+
+## Стилизация
+
+Проект использует **Tailwind CSS** для стилизации интерфейса.
+
+Основные цветовые переменные определены в:
+
+```text
+assets/css/main.css
+```
+
+
+## Команды npm
+
+| Команда | Назначение |
+|---|---|
+| `npm run dev` | Запуск сервера разработки |
+| `npm run build` | Production-сборка |
+| `npm run generate` | Генерация статических файлов |
+| `npm run preview` | Локальный просмотр production-сборки |
+| `npm run lint` | Проверка кода через ESLint |
+| `npm run format` | Форматирование кода через Prettier |
+
+
+## Дополнительно
+
+Frontend-сервис предназначен для работы совместно с backend-компонентом `stylometr-backend`.
+
+Перед запуском рекомендуется убедиться, что backend-сервис доступен и корректно настроен через переменную:
+
+```env
+NUXT_PUBLIC_API_BASE
+```
