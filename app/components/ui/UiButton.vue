@@ -69,7 +69,7 @@ const buttonClasses = computed(() => {
   @apply inline-flex items-center justify-center gap-x-2 rounded-full text-sm font-semibold transition-all duration-200;
 }
 
-/* SIZES */
+/* Размеры */
 
 .btn-sm {
   @apply min-h-8 px-3 py-1;
@@ -99,9 +99,9 @@ const buttonClasses = computed(() => {
   @apply text-xs;
 }
 
-/* SIZES */
+/* Размеры */
 
-/* THEMES */
+/* Темизация */
 .btn-default {
   @apply bg-sm-bg-2 text-sm-text-1 hover:bg-sm-bg-3 active:bg-sm-bg-4 focus-visible:bg-sm-bg-3 disabled:bg-sm-bg-2/40 disabled:text-sm-text-3/40;
 }
@@ -122,7 +122,7 @@ const buttonClasses = computed(() => {
   @apply bg-sm-accent-1 text-sm-text-1 hover:bg-sm-accent-2 active:bg-sm-accent-3 focus-visible:bg-sm-accent-2 disabled:bg-sm-accent-2/40 disabled:text-sm-text-1/50;
 }
 
-/* THEMES */
+/* Темизация */
 
 .btn_reversed {
   @apply flex-row-reverse;
